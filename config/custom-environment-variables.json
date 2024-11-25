@@ -1,0 +1,7 @@
+{
+  "db": {
+    "adminEmail": "ADMIN_EMAIL",
+    "adminPassword": "ADMIN_PASSWORD",
+    "adminSalt": "ADMIN_SALT"
+  }
+}

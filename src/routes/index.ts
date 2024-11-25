@@ -1,22 +1,19 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { initAdminRoutes } from "./admin";
+import { initHomeRoutes } from "./home";
 
-function indexHandler (_request: FastifyRequest, reply: FastifyReply) {
-  reply.view("index.hbs");
+function indexHandler(_request: FastifyRequest, reply: FastifyReply) {
+  reply.redirect("/home");
 }
 
 const indexRoute = {
-  method: "GET",
   url: "/",
-  schema: {
-    response: {
-      200: {
-        type: "object"
-      }
-    }
-  },
-  handler: indexHandler
-}
+  method: "GET",
+  handler: indexHandler,
+};
 
-export function initRoutes(server: FastifyInstance){
+export function initRoutes(server: FastifyInstance) {
   server.route(indexRoute);
+  initHomeRoutes(server);
+  initAdminRoutes(server);
 }

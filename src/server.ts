@@ -1,20 +1,38 @@
 import Fastify from "fastify";
 import view from "@fastify/view";
-import handlebars from "handlebars"
-import { initRoutes } from "./routes";
+import handlebars from "handlebars";
+import cookie from "@fastify/cookie";
 import path from "path";
+import { dbClientPlugin } from "./plugins/dbClient";
+import { servicesPlugin } from "./plugins/services";
+import { routesPlugin } from "./plugins/routes";
+import fastifyMultipart from "@fastify/multipart";
 
-export async function createServer(){
+export async function createServer() {
   const server = Fastify({
-    logger: true
+    logger: true,
   });
+  server.register(cookie, {
+    secret: "password",
+  });
+  server.register(fastifyMultipart, { attachFieldsToBody: "keyValues" });
+  server.register(dbClientPlugin);
+  server.register(servicesPlugin);
   server.register(view, {
     engine: {
       handlebars,
     },
-    root: path.resolve(__dirname, "views")
+    layout: "layout.hbs",
+    options: {
+      partials: {
+        header: "partials/header.hbs",
+        footer: "partials/footer.hbs",
+        menu: "partials/menu.hbs",
+      },
+    },
+    root: path.resolve(__dirname, "views"),
   });
-  initRoutes(server);
-  await server.listen({port: 3000});
-  return server
+  server.register(routesPlugin);
+  await server.listen({ port: 3000 });
+  return server;
 }

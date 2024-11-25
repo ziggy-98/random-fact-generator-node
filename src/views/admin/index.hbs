@@ -1,3 +1,8 @@
+{{#if error }}
+  <div class="error-container">
+    <p>{{error}}</p>
+  </div>
+{{/if}}
 <form action="/admin/login" method="POST" enctype="multipart/form-data">
   <label for="email">Email</label>
   <input name="email">

@@ -1,0 +1,17 @@
+{
+  "presets": [
+    "@babel/preset-typescript",
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "node": "16"
+        }
+      }
+    ]
+  ],
+  "exclude": ["node_modules/**"],
+  "plugins": [
+    "@babel/plugin-transform-runtime"
+  ]
+}

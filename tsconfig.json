@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
     /* Basic Options */
+    "rootDir": "./src",
+    "outDir": "dist",
     "lib": ["es2023"],
     "target": "es2022",
     "skipLibCheck": true,
@@ -35,6 +37,8 @@
     /* pretty compile output */
     "pretty": true
   },
+  "include": [
+    "src"
+  ],
   "exclude": ["node_modules"],
-
 }

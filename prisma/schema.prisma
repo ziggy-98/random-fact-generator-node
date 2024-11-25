@@ -9,6 +9,22 @@ generator client {
 
 model User {
   id       Int    @id @default(autoincrement())
-  email    String
+  email    String @unique
   password String
+  salt     String
+  name     String
+  image    Image? @relation(fields: [imageId], references: [id])
+  imageId  Int    @unique
+}
+
+model Session {
+  id      Int      @id @default(autoincrement())
+  session String   @unique
+  ttl     DateTime
+}
+
+model Image {
+  id   Int    @id @default(autoincrement())
+  url  String @unique
+  user User?
 }

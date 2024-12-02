@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import { FastifyInstance } from "fastify";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { nanoid } from "nanoid";
+import config from "config";
 
 export class UserService {
   dbClient: PrismaClient;
@@ -15,7 +16,7 @@ export class UserService {
     if (!sessionJwt) {
       return false;
     }
-    const { session } = jwt.verify(sessionJwt, "password") as JwtPayload;
+    const { session } = jwt.verify(sessionJwt, config.get<string>("cookies.secret")) as JwtPayload;
     const sessionQuery = {
       where: {
         session,
@@ -43,7 +44,7 @@ export class UserService {
     }
 
     const newTtl = new Date();
-    newTtl.setHours(newTtl.getHours() + 1);
+    newTtl.setHours(newTtl.getHours() + config.get<number>("cookies.expiresIn"));
 
     await this.dbClient.session.update({
       where: {
@@ -89,13 +90,13 @@ export class UserService {
       return;
     }
     const session = await this.createSession(user.id);
-    return jwt.sign({ session }, "password");
+    return jwt.sign({ session }, config.get<string>("cookies.secret"));
   }
 
   async createSession(userId: number) {
     const sessionHash = crypto.pbkdf2Sync(nanoid(), "salt", 10000, 64, "sha512").toString("hex");
     const ttlDate = new Date();
-    ttlDate.setHours(ttlDate.getHours() + 1);
+    ttlDate.setHours(ttlDate.getHours() + config.get<number>("cookies.expiresIn"));
     await this.dbClient.session.create({
       data: {
         session: sessionHash,

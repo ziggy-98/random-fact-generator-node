@@ -4,4 +4,8 @@ module.exports = {
     adminPassword: "",
     adminSalt: "",
   },
+  cookies: {
+    secret: "password",
+    expiresIn: 1,
+  },
 };

@@ -10,7 +10,7 @@
       }
     ]
   ],
-  "exclude": ["node_modules/**"],
+  "exclude": ["node_modules/**", "src/client/sass/**"],
   "plugins": [
     "@babel/plugin-transform-runtime"
   ]

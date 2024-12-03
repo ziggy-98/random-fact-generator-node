@@ -2,6 +2,7 @@ import Fastify from "fastify";
 import view from "@fastify/view";
 import handlebars from "handlebars";
 import cookie from "@fastify/cookie";
+import staticPlugin from "@fastify/static";
 import path from "path";
 import { dbClientPlugin } from "./plugins/dbClient";
 import { servicesPlugin } from "./plugins/services";
@@ -18,6 +19,10 @@ export async function createServer() {
   server.register(fastifyMultipart, { attachFieldsToBody: "keyValues" });
   server.register(dbClientPlugin);
   server.register(servicesPlugin);
+  server.register(staticPlugin, {
+    root: path.join(__dirname, "..", "client"),
+    prefix: "/client/",
+  });
   server.register(view, {
     engine: {
       handlebars,

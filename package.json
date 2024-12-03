@@ -1,7 +1,9 @@
 {
   "scripts": {
     "start": "node ./dist/index.js",
-    "build": "babel --extensions '.ts' src -d dist --copy-files",
+    "build:app": "babel --extensions '.ts' src -d dist --copy-files",
+    "build:sass": "sass src/client/sass/app.scss src/client/css/app.css",
+    "build": "npm run build:sass && npm run build:app",
     "watch": "babel --watch --extensions '.ts' src -d dist -s --copy-files",
     "start:local": "nodemon ./dist/index.js",
     "dev": "concurrently 'npm run watch' 'npm run start:local'"
@@ -9,6 +11,7 @@
   "dependencies": {
     "@fastify/cookie": "^11.0.1",
     "@fastify/multipart": "^9.0.1",
+    "@fastify/static": "^8.0.3",
     "@fastify/type-provider-typebox": "^5.0.1",
     "@fastify/view": "^10.0.1",
     "@prisma/client": "^5.22.0",
@@ -20,6 +23,7 @@
     "jsonwebtoken": "^9.0.2",
     "materialize-css": "^1.0.0-rc.2",
     "nanoid": "^3.3.4",
+    "sass": "^1.81.0",
     "svelte": "^5.1.16",
     "tsc": "^2.0.4"
   },

@@ -3,11 +3,14 @@ import view from "@fastify/view";
 import handlebars from "handlebars";
 import cookie from "@fastify/cookie";
 import staticPlugin from "@fastify/static";
+import session from "@fastify/secure-session";
+import flash from "@fastify/flash";
 import path from "path";
 import { dbClientPlugin } from "./plugins/dbClient";
 import { servicesPlugin } from "./plugins/services";
 import { routesPlugin } from "./plugins/routes";
 import fastifyMultipart from "@fastify/multipart";
+import config from "config";
 
 export async function createServer() {
   const server = Fastify({
@@ -17,6 +20,10 @@ export async function createServer() {
     secret: "password",
   });
   server.register(fastifyMultipart, { attachFieldsToBody: "keyValues" });
+  server.register(session, {
+    key: config.get<string>("session.secret"),
+  });
+  server.register(flash);
   server.register(dbClientPlugin);
   server.register(servicesPlugin);
   server.register(staticPlugin, {

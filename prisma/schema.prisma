@@ -29,3 +29,18 @@ model Image {
   url  String @unique
   user User?
 }
+
+enum Category {
+  MUSIC
+  FILM
+  HISTORY
+  SCIENCE
+}
+
+model Fact {
+  id        Int      @id @default(autoincrement())
+  category  Category
+  content   String
+  createdAt DateTime
+  updatedAt DateTime
+}

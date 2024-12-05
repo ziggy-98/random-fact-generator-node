@@ -1,6 +1,5 @@
-import { PrismaClient } from "@prisma/client";
+import { Category, PrismaClient } from "@prisma/client";
 import { FastifyInstance } from "fastify";
-import { FactCategory } from "../../types/FactCategory";
 import { randomInt } from "crypto";
 
 export class FactService {
@@ -10,31 +9,37 @@ export class FactService {
     this.client = server["dbClient"];
   }
 
-  getRandomFact(category?: FactCategory) {
-    const totalFacts = this.getTotalFactsForCategory(category) ?? this.getTotalFacts();
-    const index = randomInt(totalFacts) - 1;
-    const queryData = {
-      where: {},
+  async getRandomFact() {
+    const totalFacts = await this.getTotalFacts();
+    const index = randomInt(totalFacts);
+    return this.client.fact.findMany({
       skip: index,
       take: 1,
-    };
-    if (category) {
-      queryData.where = {
+    });
+  }
+
+  async getCategoryFact(category: Category) {
+    const totalFacts = await this.getTotalFactsForCategory(category);
+    const index = randomInt(totalFacts);
+    return this.client.fact.findMany({
+      where: {
         category,
-      };
-    }
-    return this.client.fact.findMany(queryData);
+      },
+      skip: index,
+      take: 1,
+    });
   }
 
-  getTotalFacts() {
-    return 1;
+  async getTotalFacts() {
+    return this.client.fact.count();
   }
 
-  getTotalFactsForCategory(category?: FactCategory) {
-    if (!category) {
-      return;
-    }
-    return 1;
+  async getTotalFactsForCategory(category: Category) {
+    return this.client.fact.count({
+      where: {
+        category,
+      },
+    });
   }
 
   updateTotalsFacts() {}

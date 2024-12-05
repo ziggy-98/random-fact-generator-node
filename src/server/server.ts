@@ -10,7 +10,7 @@ import { dbClientPlugin } from "./plugins/dbClient";
 import { servicesPlugin } from "./plugins/services";
 import { routesPlugin } from "./plugins/routes";
 import fastifyMultipart from "@fastify/multipart";
-import config from "config";
+import * as fs from "node:fs";
 
 export async function createServer() {
   const server = Fastify({
@@ -21,7 +21,10 @@ export async function createServer() {
   });
   server.register(fastifyMultipart, { attachFieldsToBody: "keyValues" });
   server.register(session, {
-    key: config.get<string>("session.secret"),
+    key: fs.readFileSync(path.join(__dirname, "..", "keys", "secret-key")),
+    cookie: {
+      path: "/",
+    },
   });
   server.register(flash);
   server.register(dbClientPlugin);

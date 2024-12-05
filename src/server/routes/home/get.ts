@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 
 function homeGetHandler(_request: FastifyRequest, reply: FastifyReply) {
-  reply.view("index.hbs");
+  return reply.view("index.hbs");
 }
 
 export const homeGetRoute = {

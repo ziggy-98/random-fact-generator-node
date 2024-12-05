@@ -1,6 +1,7 @@
-import { PrismaClient } from "@prisma/client";
+import { Category, PrismaClient } from "@prisma/client";
 import config from "config";
 import crypto from "crypto";
+import * as facts from "./data/facts.json";
 
 const client = new PrismaClient();
 
@@ -24,6 +25,18 @@ async function main() {
       password: hashPass,
       salt,
     },
+  });
+  const today = new Date();
+  const factsData = facts.facts.map((fact) => {
+    return {
+      category: fact.category.toUpperCase() as Category,
+      content: fact.content,
+      createdAt: today,
+      updatedAt: today,
+    };
+  });
+  await client.fact.createMany({
+    data: factsData,
   });
 }
 

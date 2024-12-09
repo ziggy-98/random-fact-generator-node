@@ -1,9 +1,8 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { Services } from "../../types/Services";
 
 export async function isAuthenticated(request: FastifyRequest, reply: FastifyReply) {
   const { cookies, server } = request;
-  const services: Services = server["services"];
+  const services = server.services;
   if (!cookies.userSession) {
     return reply.redirect("/admin/login");
   }

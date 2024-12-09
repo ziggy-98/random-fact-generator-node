@@ -11,6 +11,7 @@ import { servicesPlugin } from "./plugins/services";
 import { registerRoutes } from "./plugins/routes";
 import fastifyMultipart from "@fastify/multipart";
 import * as fs from "node:fs";
+import { localsPlugin } from "./plugins/locals";
 
 export async function createServer() {
   const server = Fastify({
@@ -47,6 +48,7 @@ export async function createServer() {
     },
     root: path.resolve(__dirname, "views"),
   });
+  server.register(localsPlugin);
   registerRoutes(server);
   await server.listen({ port: 3000 });
   return server;

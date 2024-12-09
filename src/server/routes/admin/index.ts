@@ -1,4 +1,5 @@
 import { initLoginRoutes } from "./login";
+import { initLogoutRoutes } from "./logout";
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { Services } from "../../types/Services";
 import { initPofileRoutes } from "./profile";
@@ -21,8 +22,12 @@ const adminGetRoute = {
   handler: adminGetHandler,
 };
 
-export function initAdminRoutes(server: FastifyInstance) {
-  initLoginRoutes(server);
-  initPofileRoutes(server);
+export function initAnonymousRoutes(server: FastifyInstance) {
   server.route(adminGetRoute);
+  initLoginRoutes(server);
+}
+
+export function initProtectedRoutes(server: FastifyInstance) {
+  initPofileRoutes(server);
+  initLogoutRoutes(server);
 }

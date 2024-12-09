@@ -8,7 +8,7 @@ import flash from "@fastify/flash";
 import path from "path";
 import { dbClientPlugin } from "./plugins/dbClient";
 import { servicesPlugin } from "./plugins/services";
-import { routesPlugin } from "./plugins/routes";
+import { registerRoutes } from "./plugins/routes";
 import fastifyMultipart from "@fastify/multipart";
 import * as fs from "node:fs";
 
@@ -47,7 +47,7 @@ export async function createServer() {
     },
     root: path.resolve(__dirname, "views"),
   });
-  server.register(routesPlugin);
+  registerRoutes(server);
   await server.listen({ port: 3000 });
   return server;
 }

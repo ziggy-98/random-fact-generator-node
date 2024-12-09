@@ -22,7 +22,7 @@ async function indexPostHandler(request: AdminPostReq, reply: FastifyReply) {
   }
   const expiresDate = new Date();
   expiresDate.setHours(expiresDate.getHours() + 1);
-  reply.setCookie("session", session as string, {
+  reply.setCookie("userSession", session as string, {
     expires: expiresDate,
   });
   return reply.redirect("/admin/profile");

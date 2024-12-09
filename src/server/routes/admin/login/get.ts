@@ -1,15 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { Services } from "../../../types/Services";
 
-async function indexGetHandler(request: FastifyRequest, reply: FastifyReply) {
-  const { cookies, server } = request;
-  const services: Services = server["services"];
-  if (cookies.session) {
-    const sessionIsValid = await services.userService.validateSession(cookies.session);
-    if (sessionIsValid) {
-      return reply.redirect("/admin/profile", 302);
-    }
-  }
+async function indexGetHandler(_request: FastifyRequest, reply: FastifyReply) {
   return reply.view("admin/index.hbs", {
     page: {
       title: "Login",

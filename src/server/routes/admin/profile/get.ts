@@ -2,15 +2,11 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { Services } from "../../../types/Services";
 
 async function profileGetHandler(request: FastifyRequest, reply: FastifyReply) {
-  const { cookies, server } = request;
+  const { server } = request;
   const services: Services = server["services"];
-  if (!cookies.session) {
-    return reply.redirect("/admin/login");
-  }
-  const userId = await services.userService.validateSession(cookies.session);
+  const userId = parseInt(reply.flash("userId")[0]);
   if (!userId) {
-    reply.clearCookie("session");
-    return reply.redirect("/admin/login");
+    reply.redirect("/admin/login");
   }
   const user = await services.userService.getUserProfile(userId);
   return reply.view("/admin/profile.hbs", { user });

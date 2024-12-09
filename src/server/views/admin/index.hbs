@@ -1,12 +1,27 @@
-{{#if error }}
-  <div class="error-container">
-    <p>{{error}}</p>
+<div class="section container">
+  {{#if error }}
+    <div class="row">
+      <div class="error-container">
+        <p>{{error}}</p>
+      </div>
+    </div>
+  {{/if}}
+  <div class="row">
+    <div class="col s10 m6 offset-s1 offset-m3 z-depth-3 radius-1">
+      <form class="col s10 offset-s1" action="/admin/login" method="POST" enctype="multipart/form-data">
+          <h3>Sign in to admin console</h3>
+        <div class="section-l">
+          <div class="input-field">
+            <input name="email" placeholder="email@example.com" type="email" class="validate">
+            <label for="email">Email</label>
+          </div>
+          <div class="input-field">
+            <label for="password">Password</label>
+            <input name="password" type="password" class="validate">
+          </div>
+          <button class="btn btn-large waves-effect waves-light green" type="submit">Log in</button>
+        </div>
+      </form>
+    </div>
   </div>
-{{/if}}
-<form action="/admin/login" method="POST" enctype="multipart/form-data">
-  <label for="email">Email</label>
-  <input name="email">
-  <label for="password">Password</label>
-  <input name="password">
-  <button type="submit">Log in</button>
-</form>
+</div>

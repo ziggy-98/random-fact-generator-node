@@ -8050,4 +8050,30 @@ input[type=range]::-ms-thumb {
   width: 100%;
 }
 
+.radius-1 {
+  border-radius: 0.5rem;
+}
+
+.radius-2 {
+  border-radius: 1rem;
+}
+
+.radius-3 {
+  border-radius: 1.5rem;
+}
+
+.radius-4 {
+  border-radius: 2rem;
+}
+
+.section-m {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.section-l {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
 /*# sourceMappingURL=app.css.map */

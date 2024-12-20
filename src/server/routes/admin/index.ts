@@ -3,6 +3,7 @@ import { initLogoutRoutes } from "./logout";
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { Services } from "../../types/Services";
 import { initPofileRoutes } from "./profile";
+import { initFactsRoutes } from "./facts";
 
 async function adminGetHandler(request: FastifyRequest, reply: FastifyReply) {
   const { cookies, server } = request;
@@ -30,4 +31,5 @@ export function initAnonymousRoutes(server: FastifyInstance) {
 export function initProtectedRoutes(server: FastifyInstance) {
   initPofileRoutes(server);
   initLogoutRoutes(server);
+  initFactsRoutes(server);
 }

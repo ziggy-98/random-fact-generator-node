@@ -1,0 +1,18 @@
+<div class="section container">
+  {{#each facts}}
+    <a href="/admin/facts/{{this.id}}">
+      <div class="row section-m radius-2 card">
+        <div class="col s-12 m-2">
+          <span>{{this.id}}</span>
+        </div>
+        <div class="col s-12 m-6 truncate">
+          <span>{{this.content}}</span>
+        </div>
+        <div class="col s-12 m-4">
+          <a class="btn-large" href="/admin/facts/{{this.id}}/edit">Edit</a>
+          <a class="btn-large" href="/admin/facts/{{this.id}}/delete">Delete</a>
+        </div>
+      </div>
+    </a>
+  {{/each}}
+</div>

@@ -9,6 +9,26 @@ export class FactService {
     this.client = server["dbClient"];
   }
 
+  async getFacts(page?: number) {
+    return this.client.fact.findMany({
+      select: {
+        id: true,
+        content: true,
+        updatedAt: true,
+      },
+      skip: (page ?? 0) * 10,
+      take: 20,
+    });
+  }
+
+  async getFactById(id: number) {
+    return this.client.fact.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+
   async getRandomFact() {
     const totalFacts = await this.getTotalFacts();
     const index = randomInt(totalFacts);

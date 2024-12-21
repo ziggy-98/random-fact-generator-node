@@ -8350,10 +8350,6 @@ input[type=range]::-ms-thumb {
   width: 100%;
 }
 
-.full-height {
-  height: 100%;
-}
-
 .section-m {
   padding-top: 2rem;
   padding-bottom: 2rem;

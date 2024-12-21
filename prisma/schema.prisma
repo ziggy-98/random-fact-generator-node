@@ -38,9 +38,10 @@ enum Category {
 }
 
 model Fact {
-  id        Int      @id @default(autoincrement())
-  category  Category
-  content   String   @unique
-  createdAt DateTime
-  updatedAt DateTime
+  id           Int      @id @default(autoincrement())
+  friendlyName String   @unique
+  category     Category
+  content      String   @unique
+  createdAt    DateTime
+  updatedAt    DateTime
 }

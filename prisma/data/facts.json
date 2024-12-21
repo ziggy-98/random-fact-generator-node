@@ -2,42 +2,62 @@
   "facts": [
     {
       "category": "history",
+      "friendlyName": "Emperor Akbar",
       "content": "Emperor Akbar was the first emperor of the Mughal dynasty."
     },
     {
       "category": "history",
+      "friendlyName": "Jahangir",
       "content": "Emperor Akbar, first emperor of the Mughal dynasty, was succeeded by his son Jahangir. The direct translation of Jahangir is 'world-seizer'"
     },
     {
       "category": "history",
+      "friendlyName": "Shah Jahan",
       "content": "The third emperor of the Mughal dynasty was emperor Shah Jahan, which translates to 'King of the world'. He was responsible for creating the Taj Mahal, as a gift to his wife."
     },
     {
       "category": "film",
+      "friendlyName": "Megalopolis",
       "content": "Francis For Coppola first tried to get Megalopolis made in 1983 - he only eventually made the film in 2024, funding the film completely himself through his wine business"
     },
     {
       "category": "film",
+      "friendlyName": "Gladiator 2",
       "content": "Many people were quick to point out the historical inaccuracies in Gladiator 2, such as newspapers featuring in the film 1200 years before the invention of the first printing press. In response, Ridley Scott had one thing to say to the fans - 'Grow up'."
     },
     {
       "category": "film",
+      "friendlyName": "Cornetto trilogy",
       "content": "The trilogy of films made by Edgar Wright, Simon Pegg, and Nick Frost is called 'The Cornetto Trilogy'. This is a joke name based on the fact that in every film in the trilogy, one of the characters eats a cornetto."
     },
     {
+      "category": "film",
+      "friendlyName": "Robert Pattinson fear of clowns",
+      "content": "Robert Pattinson once lied in an interview for his film 'Water for Elephants', stating that he never wanted to run away to the circus as a child because the first time he went to a circus he witnessed a clown explode in a clown car. This is literally a complete lie and he's now astounded by his conviction during the interview."
+    },
+    {
+      "category": "film",
+      "friendlyName": "Jack Nicholson family history",
+      "content": "Jack Nicholson spent most of his early life believing his mum was his sister. When his mother was young she had Jack, and the family agreed to raise Jack as a sibling because teenage pregnancy was so frowned upon back then. Jack didn't discover this until an interview with Time magazine at the age of 37, where somehow the interviewer had obtained this information while Jack still had no idea. He later went to his other sister (or Aunt) to ask about it and she confirmed it was true"
+    },
+    {
       "category": "music",
+      "friendlyName": "Rick James and Prince",
       "content": "Rick James and Prince famously hated each other. At one point this was so bad that James stole Prince's synth. At the time synths were hard to program, and Prince was one of the only artists that had done it successfully. Rick James then used the synth for his song Superfreak. Years later Rick James finally returned the synth to Prince, long after he would've needed it, with a simple message: f*** you"
     },
     {
       "category": "music",
+      "friendlyName": "Jay-Z and Linkin Park",
       "content": "Prior to writing their mashup album, numb/encore, Jay-Z had never met the members of Linkin Park. The first time they met was in the studio to record 99 problems/I'm about to break"
     },
     {
       "category": "music",
+      "friendlyName": "Kanye West heartbreak",
       "content": "Kanye West had a long-time girlfriend that he had been with since high school, but unfortunately soon after his mum died they broke up, leading to two heartbreaks in a very short space of time. As sad as this was for him, it was great for fans, as this birthed the album 808s and Heartbreak"
     },
     {
       "category": "science",
+      "friendlyName": "Sharks are old",
       "content": "Sharks haven't needed to evolve for 450 million years. To put this in perspective, the earliest dinosaurs existed around 230 million years ago"
     }
   ]

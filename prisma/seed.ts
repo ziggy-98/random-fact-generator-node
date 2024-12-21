@@ -30,6 +30,7 @@ async function main() {
   const factsData = facts.facts.map((fact) => {
     return {
       category: fact.category.toUpperCase() as Category,
+      friendlyName: fact.friendlyName,
       content: fact.content,
       createdAt: today,
       updatedAt: today,

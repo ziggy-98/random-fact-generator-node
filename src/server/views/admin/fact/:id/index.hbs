@@ -1,0 +1,23 @@
+<div class="section container">
+  <h1 class="heading-m">Fact {{fact.id}}</h1>
+  <div id="actions" class="section right-align">
+    <a class="btn-large radius-1 waves-effect waves-light blue mr-1" href="/admin/facts/{{fact.id}}/edit">Edit</a>
+    <a class="btn-large radius-1 waves-effect waves-light red ml-1" href="/admin/facts/{{fact.id}}/delete">Delete</a>
+  </div>
+  <div class="col s-10 m-8 offset-s-1 offset-m-2 card radius-2 px-4">
+    <div class="section">
+      <h2 class="heading-s">Content</h2>
+      <p>{{fact.content}}</p>
+    </div>
+    <hr>
+    <div class="section">
+      <h2 class="heading-s">Created at</h2>
+      <p>{{fact.createdAt}}</p>
+    </div>
+    <hr>
+    <div class="section">
+      <h2 class="heading-s">Updated at</h2>
+      <p>{{fact.updatedAt}}</p>
+    </div>
+  </div>
+</div>

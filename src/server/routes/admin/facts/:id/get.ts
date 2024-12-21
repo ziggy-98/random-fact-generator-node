@@ -12,7 +12,7 @@ async function factGetHandler(req: factReq, reply: FastifyReply) {
   const { factService } = server["services"];
   const { id } = req.params;
   const fact = await factService.getFactById(parseInt(id));
-  reply.view("/admin/fact/:id/index.hbs", { fact });
+  return reply.view("/admin/fact/:id/index.hbs", { fact });
 }
 
 export const factGetRoute = {

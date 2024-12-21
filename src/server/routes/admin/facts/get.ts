@@ -13,7 +13,6 @@ async function factsGetHandler(req: factsReq, reply: FastifyReply) {
   const page = query.page;
   const facts = (await factService.getFacts(page)).map((fact) => ({
     ...fact,
-    content: fact.content.substring(0, 59),
   }));
   return reply.view("admin/fact/index.hbs", { facts });
 }

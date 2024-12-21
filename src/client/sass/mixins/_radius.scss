@@ -1,0 +1,10 @@
+@mixin radius {
+  @for $i from 0 through 4 {
+    $value: $i * 0.5rem;
+    .radius-#{$i} {
+      border-radius: $value;
+    }
+  }
+}
+
+@include radius;

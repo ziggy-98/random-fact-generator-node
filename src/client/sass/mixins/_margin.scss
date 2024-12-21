@@ -1,0 +1,27 @@
+@mixin margin {
+  @for $i from 0 through 4 {
+    $value: $i * 0.5rem;
+    .mx-#{$i} {
+      margin-left: $value;
+      margin-right: $value;
+    }
+    .my-#{$i} {
+      margin-top: $value;
+      margin-bottom: $value;
+    }
+    .mt-#{$i} {
+      margin-top: $value;
+    }
+    .mb-#{$i} {
+      margin-bottom: $value;
+    }
+    .ml-#{$i} {
+      margin-left: $value;
+    }
+    .mr-#{$i} {
+      margin-right: $value;
+    }
+  }
+}
+
+@include margin;

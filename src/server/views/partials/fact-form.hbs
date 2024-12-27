@@ -1,0 +1,38 @@
+<form method="POST" enctype="multipart/form-data">
+  <div class="input-field">
+    <input name="friendlyName" type="text" value="{{data.friendlyName}}">
+    <label for="friendlyName">Friendly name</label>
+  </div>
+  <div class="input-field">
+    <textarea name="content" class="materialize-textarea">{{data.content}}</textarea>
+    <label for="content">Content</label>
+  </div>
+  <div>
+    <label for="category">Category</label>
+    <p>
+      <label>
+        <input name="category" type="radio" value="FILM" {{checked data.category "FILM"}}>
+        <span>Film</span>
+      </label>
+    </p>
+    <p>
+      <label>
+        <input name="category" type="radio" value="MUSIC" {{checked data.category "MUSIC"}}>
+        <span>Music</span>
+      </label>
+    </p>
+    <p>
+      <label>
+        <input name="category" type="radio" value="HISTORY" {{checked data.category "HISTORY"}}>
+        <span>History</span>
+      </label>
+    </p>
+    <p>
+      <label>
+        <input name="category" type="radio" value="SCIENCE" {{checked data.category "SCIENCE"}}>
+        <span>Science</span>
+      </label>
+    </p>
+  </div>
+  <button class="waves-effect waves-light btn-large light-blue darken-3" type="submit">Save</button>
+</form>

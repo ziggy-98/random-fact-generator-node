@@ -1,4 +1,4 @@
-import { Category, PrismaClient } from "@prisma/client";
+import { Category, PrismaClient, Prisma } from "@prisma/client";
 import { FastifyInstance } from "fastify";
 import { randomInt } from "crypto";
 
@@ -66,5 +66,12 @@ export class FactService {
 
   createFact() {}
 
-  updateFact() {}
+  updateFact(id: number, fact: Prisma.FactUpdateArgs["data"]) {
+    return this.client.fact.update({
+      where: {
+        id,
+      },
+      data: fact,
+    });
+  }
 }

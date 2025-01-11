@@ -4,6 +4,16 @@
       Facts
     </h1>
   </div>
+  {{#if errors}}
+    <div class="section-m">
+      {{>errorBox}}
+    </div>
+  {{/if}}
+  {{#if successMessages}}
+    <div class="section-m">
+      {{>successBox}}
+    </div>
+  {{/if}}
   <form enctype="multipart/form-data" method="POST">
     <div class="fact-actions-container row">
         <div class="input-field col s5">

@@ -13,11 +13,15 @@ async function factsGetHandler(req: FactSearchGetReq, reply: FastifyReply) {
     ...fact,
   }));
   const pagination = buildPagination(currentPage, query, totalFacts);
+  const errors = reply.flash("errors");
+  const successMessages = reply.flash("successMessages");
   return reply.view("admin/fact/index.hbs", {
     facts,
     pagination,
     search: query.search,
     sortBy: query.sortBy ?? "createdAt",
+    errors,
+    successMessages,
   });
 }
 

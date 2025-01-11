@@ -1,8 +1,10 @@
 <div class="card red lighten-2">
-  <div class="card-content white black-text">
-    <span class="card-title">Please fix these before continuing</span>
-    {{#each errors }}
-      <p><a class="black-text" href="#{{this.fieldName}}">{{this.message}}</a></p>
-    {{/each}}
+  <div class="card-content">
+    <div class="white black-text section px-2">
+      <span class="card-title">Please fix these before continuing</span>
+      {{#each errors }}
+        <p><a class="black-text" href="#{{this.fieldName}}">{{this.message}}</a></p>
+      {{/each}}
+    </div>
   </div>
 </div>

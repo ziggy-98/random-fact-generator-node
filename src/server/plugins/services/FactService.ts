@@ -2,35 +2,39 @@ import { Category, PrismaClient, Prisma } from "@prisma/client";
 import { FastifyInstance } from "fastify";
 import { randomInt } from "crypto";
 
+type GetFactsOptions = {
+  page?: number;
+  sortOrder?: string;
+  search?: string;
+};
+
 export class FactService {
   client: PrismaClient;
+  private _totalFacts: number;
 
   constructor(server: FastifyInstance) {
     this.client = server["dbClient"];
+    this._totalFacts = 0;
+    this.client.fact
+      .count()
+      .then((total) => {
+        this._totalFacts = total;
+      })
+      .catch((err) => {
+        throw new Error(`Could not get total facts: ${err}`);
+      });
   }
 
-  async getFacts(page?: number) {
-    return this.client.fact.findMany({
-      select: {
-        id: true,
-        content: true,
-        updatedAt: true,
-      },
-      skip: (page ?? 0) * 10,
-      take: 20,
-    });
+  public get totalFacts() {
+    return this._totalFacts;
   }
 
-  async getFactById(id: number) {
-    return this.client.fact.findUnique({
-      where: {
-        id,
-      },
-    });
+  public set totalFacts(total: number) {
+    this._totalFacts = total;
   }
 
-  async getRandomFact() {
-    const totalFacts = await this.getTotalFacts();
+  getRandomFact() {
+    const totalFacts = this._totalFacts;
     const index = randomInt(totalFacts);
     return this.client.fact.findMany({
       skip: index,
@@ -50,10 +54,6 @@ export class FactService {
     });
   }
 
-  async getTotalFacts() {
-    return this.client.fact.count();
-  }
-
   async getTotalFactsForCategory(category: Category) {
     return this.client.fact.count({
       where: {
@@ -62,9 +62,62 @@ export class FactService {
     });
   }
 
-  updateTotalsFacts() {}
+  createFact(data: Prisma.FactCreateArgs["data"]) {
+    return this.client.fact.create({
+      data,
+    });
+  }
 
-  createFact() {}
+  async getFactById(id: number) {
+    return this.client.fact.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+
+  async getFacts({ page, sortOrder, search }: GetFactsOptions) {
+    let queryArgs: Prisma.FactFindManyArgs = {
+      select: {
+        id: true,
+        friendlyName: true,
+        content: true,
+        updatedAt: true,
+      },
+      take: 10,
+    };
+    if (page) {
+      queryArgs.skip = page * 10;
+    }
+    if (!sortOrder) {
+      sortOrder = "updatedAt";
+    }
+    queryArgs.orderBy = {
+      [sortOrder]: "desc",
+    };
+    if (search) {
+      queryArgs.where = {
+        OR: [
+          {
+            friendlyName: {
+              search,
+            },
+          },
+          {
+            content: {
+              search,
+            },
+          },
+        ],
+      };
+    }
+
+    let countQueryArgs: Prisma.FactCountArgs = {
+      where: queryArgs.where,
+    };
+
+    return Promise.all([this.client.fact.findMany(queryArgs), this.client.fact.count(countQueryArgs)]);
+  }
 
   updateFact(id: number, fact: Prisma.FactUpdateArgs["data"]) {
     return this.client.fact.update({
@@ -72,6 +125,14 @@ export class FactService {
         id,
       },
       data: fact,
+    });
+  }
+
+  deleteFact(id: number) {
+    return this.client.fact.delete({
+      where: {
+        id,
+      },
     });
   }
 }

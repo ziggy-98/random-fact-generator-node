@@ -1,8 +1,12 @@
-import { factsIndexGetRoute } from "./get";
+import { factsSearchGetRoute } from "./get";
 import { FastifyInstance } from "fastify";
 import { initFactRoutes } from "./:id";
+import { initNewFactRoutes } from "./new";
+import { factSearchPostRoute } from "./post";
 
 export function initFactsRoutes(server: FastifyInstance) {
   initFactRoutes(server);
-  server.route(factsIndexGetRoute);
+  initNewFactRoutes(server);
+  server.route(factsSearchGetRoute);
+  server.route(factSearchPostRoute);
 }

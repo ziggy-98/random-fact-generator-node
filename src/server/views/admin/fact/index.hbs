@@ -1,17 +1,65 @@
 <div class="section container">
-  {{#each facts}}
-      <div class="row section radius-1 card black-text valign-wrapper">
-        <div class="col s12 m2">
-          <span>{{this.id}}</span>
+  <div class="section">
+    <h1 class="heading-l">
+      Facts
+    </h1>
+  </div>
+  <form enctype="multipart/form-data" method="POST">
+    <div class="fact-actions-container row">
+        <div class="input-field col s5">
+          <i class="material-icons prefix">search</i>
+          <input id="search" name="search" type="text" value="{{search}}">
+          <label for="search">Search</label>
         </div>
-        <div class="col s12 m6">
-          <span class="truncate">{{this.content}}</span>
+        <div class="input-field col s3">
+          <label for="sortBy" class="hiddendiv">Sort by</label>
+          <select id="sortBy" name="sortBy" class="browser-default">
+            <option {{ checkFormAttribute sortBy "createdAt" "selected" }} value="createdAt">Date added</option>
+            <option {{ checkFormAttribute sortBy "updatedAt" "selected" }} value="updatedAt">Date modified</option>
+            <option {{ checkFormAttribute sortBy "friendlyName" "selected" }} value="friendlyName">Name</option>
+          </select>
         </div>
-        <div class="col s12 m4 right-align">
-          <a class="btn radius-1 green mr-1" href="/admin/facts/{{this.id}}">View</a>
-          <a class="btn radius-1 blue mx-1" href="/admin/facts/{{this.id}}/edit">Edit</a>
-          <a class="btn radius-1 red ml-1" href="/admin/facts/{{this.id}}/delete">Delete</a>
+        <div class="col s2 right-align">
+          <button class="btn-large radius-1 blue" type="submit" value="apply">Apply</button>
         </div>
+      <div class="col s2 right-align">
+        <a class="btn-large radius-1 green" href="/admin/facts/new">New</a>
       </div>
-  {{/each}}
+    </div>
+    {{#each facts}}
+        <div class="row section radius-1 card black-text valign-wrapper">
+          <div class="col s12 m1">
+            <span>{{this.id}}</span>
+          </div>
+          <div class="col s12 m2">
+            <span>{{this.friendlyName}}</span>
+          </div>
+          <div class="col s12 m5">
+            <span class="truncate">{{this.content}}</span>
+          </div>
+          <div class="col s12 m4 right-align">
+            <a class="btn radius-1 green mr-1" href="/admin/facts/{{this.id}}">View</a>
+            <a class="btn radius-1 blue mx-1" href="/admin/facts/{{this.id}}/edit">Edit</a>
+            <a class="btn radius-1 red ml-1" href="/admin/facts/{{this.id}}/delete">Delete</a>
+          </div>
+        </div>
+    {{/each}}
+    <div class="pagination-container">
+      {{#each pagination}}
+        {{#if this.href }}
+          <a href="{{this.href}}">
+            {{#if this.isIcon }}
+              <i class="material-icons">{{this.text}}</i>
+            {{else}}
+              <span>{{this.text}}</span>
+            {{/if}}
+          </a>
+        {{else}}
+          <span>
+            {{this.text}}
+          </span>
+        {{/if}}
+      {{/each}}
+    </div>
+  </form>
 </div>

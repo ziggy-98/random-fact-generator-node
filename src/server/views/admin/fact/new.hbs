@@ -1,0 +1,11 @@
+<div class="section container">
+  <div class="section-m">
+    <h1 class="heading-l">New fact</h1>
+  </div>
+  {{#if errors}}
+    <div class="section-m">
+      {{> errorBox}}
+    </div>
+  {{/if}}
+  {{> factForm }}
+</div>

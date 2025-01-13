@@ -1,10 +1,17 @@
 <div class="section">
   <div class="container">
-    <h1 class="center">Your {{category}} fact</h1>
-    <p>{{fact.content}}</p>
-    <p>Do you want another fact?</p>
-    <form action="/home/fact/{{category}}" method="GET">
-      <button class="waves-effect waves-light btn-large green darken-2 full-width">We go again!</button>
-    </form>
+    <div class="section-l">
+      <h1 class="center">Your {{category}} fact</h1>
+      <p class="large-text">{{fact.content}}</p>
+      <p>Do you want another fact?</p>
+      <div class="row breakout-row">
+        <div class="col s6">
+          <a class="waves-effect waves-light btn-large yellow darken-2 full-width black-text" href="/home">Take me back</a>
+        </div>
+        <div class="col s6">
+          <a class="waves-effect waves-light btn-large green darken-2 full-width" href="/home/fact/{{category}}">Go again</a>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

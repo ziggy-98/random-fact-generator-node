@@ -2,11 +2,14 @@
 <html lang="en">
   <head>
     <title>Random fact generator{{page.title}}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/client/css/app.css">
     <script src="/client/js/materialize.js"></script>
   </head>
-  <body>
+  <body class="{{ inlineIf page.isAdmin true "home-page" true }}">
     <header>
       {{#if page.isAdmin }}
         <nav>
@@ -16,15 +19,15 @@
             </ul>
           </div>
         </nav>
-      {{else}}
-        <nav>
-          <div class="nav-wrapper">
-
-          </div>
-        </nav>
       {{/if}}
     </header>
-    {{{body}}}
-    <footer class="page-footer"></footer>
+    <main>
+      {{{body}}}
+    </main>
+    <footer class="page-footer">
+        <div class="container">
+          <p class="right-align">&copy; Luke Zigler 2025</p>
+        </div>
+    </footer>
   </body>
 </html>

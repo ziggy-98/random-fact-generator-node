@@ -5,6 +5,23 @@ body.home-page{
   background-image: linear-gradient(to bottom right, #00ffc9, #85c9ff);
 }
 
+main{
+  min-height: calc(100vh - 3em - 1.2rem);
+}
+
+p{
+  font-size: 1.2rem;
+}
+
+.page-footer{
+  overflow: auto;
+  padding-top: 0;
+}
+
+.large-text{
+  font-size: 1.5rem;
+}
+
 .full-width{
   width: 100%;
 }
@@ -56,4 +73,8 @@ body.home-page{
   text-shadow: 2px 2px 2px #000;
   letter-spacing: -1px;
   text-transform: uppercase;
+}
+
+.breakout-row{
+  margin: 0 -.75rem;
 }

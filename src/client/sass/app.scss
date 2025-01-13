@@ -1,7 +1,7 @@
 @forward "../../../node_modules/materialize-css/dist/css/materialize";
 @use "mixins";
 
-body{
+body.home-page{
   background-image: linear-gradient(to bottom right, #00ffc9, #85c9ff);
 }
 

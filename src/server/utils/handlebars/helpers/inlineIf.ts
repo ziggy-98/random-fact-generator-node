@@ -1,11 +1,11 @@
-export function inlineIf(input: string, evaluation: boolean, value: string, not?: boolean) {
-  if ((evaluation && input && !not) || (evaluation && !input && not)) {
+export function inlineIf(input: string | undefined, value: string, isInputTruthy?: boolean, not?: boolean) {
+  if ((isInputTruthy && input && !not) || (isInputTruthy && !input && not)) {
     return value;
   }
-  if ((evaluation && !input) || (evaluation && input && not)) {
+  if ((isInputTruthy && !input) || (isInputTruthy && input && not)) {
     return;
   }
-  if (!evaluation && not) {
+  if (!isInputTruthy && not) {
     return input !== value;
   }
   return input === value;

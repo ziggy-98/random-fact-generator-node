@@ -10,5 +10,14 @@
   "ignorePatterns": [
     "node_modules/**",
     "dist/**"
+  ],
+  "overrides": [
+    {
+      "files": ["tests/**/*"],
+      "plugins": ["jest"],
+      "env": {
+        "jest/globals": true
+      }
+    }
   ]
 }

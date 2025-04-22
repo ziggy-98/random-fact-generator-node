@@ -11,6 +11,10 @@ export function math(input: number, value: number, operation: string) {
     case "mod":
       return input % value;
     default:
-      return Math[operation]?.(input, value) ?? undefined;
+      const functionSig = Math[operation];
+      if (!functionSig || functionSig.length !== 2) {
+        return undefined;
+      }
+      return Math[operation]?.(input, value);
   }
 }

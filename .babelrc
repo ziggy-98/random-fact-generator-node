@@ -5,12 +5,12 @@
       "@babel/preset-env",
       {
         "targets": {
-          "node": "16"
+          "node": "current"
         }
       }
     ]
   ],
-  "exclude": ["node_modules/**", "src/client/sass/**"],
+  "exclude": ["node_modules/**", "src/client/sass/**", "**/__test__/**"],
   "plugins": [
     "@babel/plugin-transform-runtime"
   ]

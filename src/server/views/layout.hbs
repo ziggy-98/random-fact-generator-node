@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/client/css/app.css">
     <script src="/client/js/materialize.js"></script>
   </head>
-  <body class="{{ inlineIf page.isAdmin true "home-page" true }}">
+  <body class="{{ inlineIf page.isAdmin "home-page" true true }}">
     <header>
       {{#if page.isAdmin }}
         <nav>

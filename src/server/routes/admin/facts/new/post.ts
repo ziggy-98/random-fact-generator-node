@@ -10,7 +10,6 @@ async function post(req: FactPostReq, reply: FastifyReply) {
       createdAt: new Date(),
       updatedAt: new Date(),
     });
-    factService.totalFacts = factService.totalFacts + 1;
     req.log.info(`Fact updated: ${createdFact}`);
     req.flash("success", ["Fact created"]);
     reply.redirect(`/admin/facts/${createdFact.id}`);

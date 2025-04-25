@@ -139,7 +139,7 @@ describe("factsService", () => {
       const allFacts = createRandomFacts(10).concat(createFactsWithName(10, "A common name", 10));
       server["dbClient"].fact.findMany.mockImplementationOnce((options) => {
         let returnedFacts = allFacts.slice(0);
-        if (options.orderBy) {
+        if (options.orderBy && !Object.keys(options.orderBy).includes("updatedAt")) {
           returnedFacts.sort((factA, factB) => {
             const key = Object.keys(options.orderBy)[0];
             return factB[key] - factA[key];
@@ -195,5 +195,46 @@ describe("factsService", () => {
       expect(returnedFacts[9].friendlyName).toBe("A common name");
       expect(count).toBe(10);
     });
+  });
+  it("Should update a fact with only the updated fields when updateFact is called", async () => {
+    const allFacts = createRandomFacts(10);
+    const checkContent = allFacts[6].content;
+    server["dbClient"].fact.update.mockImplementationOnce(({ where, data }) => {
+      const id = where.id;
+      const factToUpdate = allFacts[id];
+      const updatedFact = Object.entries(factToUpdate).reduce((acc: Partial<Fact>, [key, value]) => {
+        if (data[key]) {
+          return {
+            ...acc,
+            [key]: data[key],
+          };
+        }
+        return {
+          ...acc,
+          [key]: value,
+        };
+      }, {});
+      allFacts.splice(id, 1, updatedFact as Fact);
+    });
+    const factsService = new FactService(server as FastifyInstance);
+    const data = {
+      friendlyName: "A new name",
+      category: "FILM" as Category,
+    };
+    await factsService.updateFact(6, data);
+    expect(allFacts[6].friendlyName).toBe("A new name");
+    expect(allFacts[6].category).toBe("FILM");
+    expect(allFacts[6].content).toBe(checkContent);
+  });
+
+  it("Should delete a fact from the db when deleteFact is called", async () => {
+    const allFacts = createRandomFacts(10);
+    server["dbClient"].fact.delete.mockImplementationOnce(({ where }) => {
+      const id = where.id;
+      allFacts.splice(id, 1);
+    });
+    const factsService = new FactService(server as FastifyInstance);
+    await factsService.deleteFact(6);
+    expect(allFacts.find((fact) => fact.id === 6)).toBe(undefined);
   });
 });

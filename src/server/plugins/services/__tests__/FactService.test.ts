@@ -124,22 +124,76 @@ describe("factsService", () => {
     expect(factsService.totalFacts).toBe(11);
   });
 
-  it("Should return a fact with a specific id when getFactById is called", () => {
+  it("Should return a fact with a specific id when getFactById is called", async () => {
     const allFacts = createRandomFacts(10);
-    server["dbClient"].fact.find();
+    server["dbClient"].fact.findUnique.mockImplementationOnce((options) => {
+      const id = options.where.id;
+      return allFacts.find((fact) => fact.id === id);
+    });
+    const factsService = new FactService(server as FastifyInstance);
+    const result = await factsService.getFactById(6);
+    expect(result).toEqual(allFacts[6]);
   });
-  // describe("getFacts", () => {
-  //   beforeEach(() => {
-  //     const allFacts = createRandomFacts(10).concat(createFactsWithName(10, "A common name", 10));
-  //     server["dbClient"].facts.findMany.mockImplementationOnce((options) => {
-  //       if(options.orderBy){
-  //
-  //       }
-  //     });
-  //   });
-  //   it("Should return the first 10 facts when getFacts is called with no filters", () => {});
-  //   it("Should return the second 10 facts when getFacts is called with page passed", () => {});
-  //   it("Should return the first 10 facts sorted by name if getFacts is called with the sort order 'name'", () => {});
-  //   it("Should return the first 10 facts that match the search string when getFacts is called with a search string", () => {});
-  // });
+  describe("getFacts", () => {
+    beforeEach(() => {
+      const allFacts = createRandomFacts(10).concat(createFactsWithName(10, "A common name", 10));
+      server["dbClient"].fact.findMany.mockImplementationOnce((options) => {
+        let returnedFacts = allFacts.slice(0);
+        if (options.orderBy) {
+          returnedFacts.sort((factA, factB) => {
+            const key = Object.keys(options.orderBy)[0];
+            return factB[key] - factA[key];
+          });
+        }
+        if (options.where) {
+          const searchString = options.where.OR[0].friendlyName.search;
+          returnedFacts = returnedFacts.filter((fact) => fact.friendlyName.indexOf(searchString) > -1 || fact.content.indexOf(searchString) > -1);
+        }
+        if (options.skip) {
+          return returnedFacts.slice(options.skip, options.skip + 10);
+        }
+        return returnedFacts.slice(0, 10);
+      });
+      server["dbClient"].fact.count.mockImplementationOnce((options) => {
+        if (options.where) {
+          const searchString = options.where.OR[0].friendlyName.search;
+          return allFacts.filter((fact) => fact.friendlyName.indexOf(searchString) > -1 || fact.content.indexOf(searchString) > -1).length;
+        }
+        return allFacts.length;
+      });
+    });
+    it("Should return the first 10 facts when getFacts is called with no filters", async () => {
+      const factsService = new FactService(server as FastifyInstance);
+      const [returnedFacts, count] = await factsService.getFacts({});
+      expect(returnedFacts.length).toBe(10);
+      expect(returnedFacts[0].id).toBe(0);
+      expect(count).toBe(20);
+    });
+    it("Should return the second 10 facts when getFacts is called with page passed", async () => {
+      const factsService = new FactService(server as FastifyInstance);
+      const [returnedFacts, count] = await factsService.getFacts({ page: 1 });
+      expect(returnedFacts.length).toBe(10);
+      expect(returnedFacts[0].id).toBe(10);
+      expect(count).toBe(20);
+    });
+    it("Should return the first 10 facts sorted by name if getFacts is called with the sort order 'friendlyName'", async () => {
+      const factsService = new FactService(server as FastifyInstance);
+      const [returnedFacts, count] = await factsService.getFacts({ sortOrder: "friendlyName" });
+      let sortedFacts = returnedFacts.slice(0);
+      sortedFacts.sort((factA, factB) => {
+        //@ts-expect-error you can sort by name even though it's not two numerical values
+        return factB.friendlyName - factA.friendlyName;
+      });
+      expect(sortedFacts[0]).toEqual(returnedFacts[0]);
+      expect(sortedFacts[9]).toEqual(returnedFacts[9]);
+      expect(count).toBe(20);
+    });
+    it("Should return the first 10 facts that match the search string when getFacts is called with a search string", async () => {
+      const factsService = new FactService(server as FastifyInstance);
+      const [returnedFacts, count] = await factsService.getFacts({ search: "A common name" });
+      expect(returnedFacts[0].friendlyName).toBe("A common name");
+      expect(returnedFacts[9].friendlyName).toBe("A common name");
+      expect(count).toBe(10);
+    });
+  });
 });

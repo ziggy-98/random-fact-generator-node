@@ -102,7 +102,7 @@ describe("factsService", () => {
   it("Should return a new fact and update total facts when createFact is called", async () => {
     const newFact = createRandomFacts(1)[0];
 
-    server["dbClient"].fact.count.mockResolvedValueOnce(10);
+    server["dbClient"].fact.count.mockResolvedValueOnce(11);
     server["dbClient"].fact.create.mockImplementationOnce(({ data }) => {
       return data;
     });

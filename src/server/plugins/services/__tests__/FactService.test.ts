@@ -51,17 +51,6 @@ describe("factsService", () => {
     };
   });
 
-  it("Should set total facts properly when instantiating the service", async () => {
-    const factsService = new FactService(server as FastifyInstance);
-    expect(factsService.totalFacts).toBe(0);
-  });
-
-  it("Should successfully set the total facts when total facts is updated", () => {
-    const factsService = new FactService(server as FastifyInstance);
-    factsService.totalFacts = factsService.totalFacts + 1;
-    expect(factsService.totalFacts).toBe(1);
-  });
-
   it("Should successfully return a random fact when getRandomFact is called", async () => {
     // @ts-ignore
     jest.spyOn(crypto, "randomInt").mockReturnValueOnce(6);
@@ -121,7 +110,8 @@ describe("factsService", () => {
     const factsService = new FactService(server as FastifyInstance);
     const result = await factsService.createFact(newFact);
     expect(result).toEqual(newFact);
-    expect(factsService.totalFacts).toBe(11);
+    const totalFacts = await factsService.getTotalFacts();
+    expect(totalFacts).toBe(11);
   });
 
   it("Should return a fact with a specific id when getFactById is called", async () => {

@@ -10,30 +10,17 @@ type GetFactsOptions = {
 
 export class FactService {
   client: PrismaClient;
-  private _totalFacts: number;
 
   constructor(server: FastifyInstance) {
     this.client = server["dbClient"];
-    this._totalFacts = 0;
   }
 
-  async initTotalFacts() {
-    this._totalFacts = await this.client.fact.count();
-  }
-
-  public get totalFacts() {
-    return this._totalFacts;
-  }
-
-  public set totalFacts(total: number) {
-    this._totalFacts = total;
+  async getTotalFacts() {
+    return this.client.fact.count();
   }
 
   async getRandomFact() {
-    const totalFacts = this._totalFacts;
-    if (totalFacts === 0) {
-      await this.initTotalFacts();
-    }
+    const totalFacts = await this.getTotalFacts();
     const index = randomInt(totalFacts);
     return this.client.fact.findMany({
       skip: index,
@@ -62,14 +49,9 @@ export class FactService {
   }
 
   async createFact(data: Prisma.FactCreateArgs["data"]) {
-    if (this.totalFacts === 0) {
-      await this.initTotalFacts();
-    }
-    const newFact = await this.client.fact.create({
+    return this.client.fact.create({
       data,
     });
-    this.totalFacts = this.totalFacts + 1;
-    return newFact;
   }
 
   async getFactById(id: number) {
@@ -133,12 +115,10 @@ export class FactService {
   }
 
   async deleteFact(id: number) {
-    const deletedFact = await this.client.fact.delete({
+    return this.client.fact.delete({
       where: {
         id,
       },
     });
-    this.totalFacts = this.totalFacts - 1;
-    return deletedFact;
   }
 }

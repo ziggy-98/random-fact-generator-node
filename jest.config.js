@@ -4,4 +4,6 @@ module.exports = {
   transform: {
     "^.+\.tsx?$": ["ts-jest", {}],
   },
+  testMatch: ["**/__tests__/**/*.test.ts"],
+  setupFiles: ["./.jest/setEnvVars.ts"],
 };

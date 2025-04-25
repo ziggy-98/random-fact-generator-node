@@ -4,3 +4,4 @@ src/keys
 .idea
 .env
 src/client/css
+coverage

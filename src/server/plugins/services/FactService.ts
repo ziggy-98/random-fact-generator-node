@@ -10,31 +10,17 @@ type GetFactsOptions = {
 
 export class FactService {
   client: PrismaClient;
-  private _totalFacts: number;
 
   constructor(server: FastifyInstance) {
     this.client = server["dbClient"];
-    this._totalFacts = 0;
-    this.client.fact
-      .count()
-      .then((total) => {
-        this._totalFacts = total;
-      })
-      .catch((err) => {
-        throw new Error(`Could not get total facts: ${err}`);
-      });
   }
 
-  public get totalFacts() {
-    return this._totalFacts;
+  async getTotalFacts() {
+    return this.client.fact.count();
   }
 
-  public set totalFacts(total: number) {
-    this._totalFacts = total;
-  }
-
-  getRandomFact() {
-    const totalFacts = this._totalFacts;
+  async getRandomFact() {
+    const totalFacts = await this.getTotalFacts();
     const index = randomInt(totalFacts);
     return this.client.fact.findMany({
       skip: index,
@@ -62,7 +48,7 @@ export class FactService {
     });
   }
 
-  createFact(data: Prisma.FactCreateArgs["data"]) {
+  async createFact(data: Prisma.FactCreateArgs["data"]) {
     return this.client.fact.create({
       data,
     });
@@ -128,7 +114,7 @@ export class FactService {
     });
   }
 
-  deleteFact(id: number) {
+  async deleteFact(id: number) {
     return this.client.fact.delete({
       where: {
         id,

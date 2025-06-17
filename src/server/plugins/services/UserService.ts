@@ -12,7 +12,7 @@ export class UserService {
     this.dbClient = server["dbClient"];
   }
 
-  async validateSession(sessionJwt: string) {
+  async validateSession(sessionJwt: string | undefined) {
     if (!sessionJwt) {
       return false;
     }
@@ -31,7 +31,7 @@ export class UserService {
     const sessionData = await this.dbClient.session.findUnique(sessionQuery);
 
     if (!sessionData) {
-      return;
+      return false;
     }
 
     if (new Date() > sessionData.ttl) {
@@ -40,7 +40,7 @@ export class UserService {
           id: sessionData.id,
         },
       });
-      return;
+      return false;
     }
 
     const newTtl = new Date();
